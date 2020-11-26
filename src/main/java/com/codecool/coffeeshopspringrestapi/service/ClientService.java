@@ -24,6 +24,11 @@ public class ClientService {
         this.orderRepository = orderRepository;
     }
 
+    public List<Client> getByLastName(){
+        List<Client> clients = clientRepository.findAllByOrderByLastNameAsc();
+        return clients;
+    }
+
     public List<Client> getClients(String orderBy){
         List<Client> clients = clientRepository.findAll();
         if("lastName".equals(orderBy)) {
@@ -62,5 +67,10 @@ public class ClientService {
 
     public void deleteClient(long id) {
         clientRepository.deleteById(id);
+    }
+
+    public List<Client> getAllByFirstName(String firstName) {
+        List<Client> clients = clientRepository.findAllByFirstName(firstName);
+        return clients;
     }
 }
