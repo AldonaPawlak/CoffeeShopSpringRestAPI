@@ -45,8 +45,10 @@ public class ClientService {
     }
 
     public ResponseEntity<Client> editClient(Client client) {
-        Optional<Client> optionalClient = clientRepository.findById(client.getId());
-        optionalClient.ifPresentOrElse(oc -> updateClient(oc, client), optionalClient::orElseThrow);
+        Client clientToUpdate = clientRepository.findById(client.getId()).orElseThrow(RuntimeException::new);
+        updateClient(clientToUpdate, client);
+        //        Optional<Client> optionalClient = clientRepository.findById(client.getId());
+//        optionalClient.ifPresentOrElse(oc -> updateClient(oc, client), optionalClient::orElseThrow);
         return ResponseEntity.accepted().build();
     }
 

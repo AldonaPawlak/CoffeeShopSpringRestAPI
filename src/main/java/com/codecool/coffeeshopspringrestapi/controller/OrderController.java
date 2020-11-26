@@ -23,7 +23,6 @@ public class OrderController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Order> getOrders() {
         return orderService.getOrders();
-
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,5 +45,5 @@ public class OrderController {
         orderService.deleteOrder(id);
     }
 
-
 }
+
