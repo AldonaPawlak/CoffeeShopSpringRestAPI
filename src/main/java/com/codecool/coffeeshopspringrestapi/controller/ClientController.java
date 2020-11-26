@@ -1,5 +1,7 @@
 package com.codecool.coffeeshopspringrestapi.controller;
 
+import com.codecool.coffeeshopspringrestapi.controller.dto.ClientDto;
+import com.codecool.coffeeshopspringrestapi.controller.dto.DtoMapper;
 import com.codecool.coffeeshopspringrestapi.model.Client;
 import com.codecool.coffeeshopspringrestapi.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,18 @@ public class ClientController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Client> getClients(@RequestParam(defaultValue="lastName") String orderBy) {
-//        return clientService.getClients(orderBy);
-        return clientService.getByLastName();
+    public List<Client> getClients(@RequestParam(required = false) int page) {
+        int pageNumber = page >= 0 ? page : 0;
+        return clientService.getByLastName(pageNumber);
     }
+
+    @GetMapping(path = "/dto", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ClientDto> getDtoClients(@RequestParam(required = false) int page) {
+        int pageNumber = page >= 0 ? page : 0;
+        return DtoMapper.mapToClientDtos(clientService.getByLastName(pageNumber));
+    }
+
+
 
     @GetMapping(path = "/first",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Client> getClientsByFirstName(@RequestParam(defaultValue="Wojtek") String firstName) {

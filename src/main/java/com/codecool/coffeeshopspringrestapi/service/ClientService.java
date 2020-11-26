@@ -4,6 +4,7 @@ import com.codecool.coffeeshopspringrestapi.model.Client;
 import com.codecool.coffeeshopspringrestapi.repository.ClientRepository;
 import com.codecool.coffeeshopspringrestapi.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
     private final OrderRepository orderRepository;
+    private static final int PAGE_SIZE = 10;
 
 
     @Autowired
@@ -24,20 +26,20 @@ public class ClientService {
         this.orderRepository = orderRepository;
     }
 
-    public List<Client> getByLastName(){
-        List<Client> clients = clientRepository.findAllByOrderByLastNameAsc();
+    public List<Client> getByLastName(int page){
+        List<Client> clients = clientRepository.findAllByOrderByLastNameAsc(PageRequest.of(page, PAGE_SIZE));
         return clients;
     }
 
-    public List<Client> getClients(String orderBy){
-        List<Client> clients = clientRepository.findAll();
-        if("lastName".equals(orderBy)) {
-            clients.sort(Comparator.comparing(Client::getLastName));
-        } else if("firstName".equals(orderBy)) {
-            clients.sort(Comparator.comparing(Client::getFirstName));
-        }
-        return clients;
-    }
+//    public List<Client> getClients(String orderBy){
+//        List<Client> clients = clientRepository.findAll();
+//        if("lastName".equals(orderBy)) {
+//            clients.sort(Comparator.comparing(Client::getLastName));
+//        } else if("firstName".equals(orderBy)) {
+//            clients.sort(Comparator.comparing(Client::getFirstName));
+//        }
+//        return clients;
+//    }
 
     public ResponseEntity<Client> getClient(Long id){
         return clientRepository.findById(id)
