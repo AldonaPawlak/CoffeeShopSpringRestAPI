@@ -23,18 +23,10 @@ public class ClientController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Client> getClients(@RequestParam(required = false) int page) {
-        int pageNumber = page >= 0 ? page : 0;
-        return clientService.getByLastName(pageNumber);
+    public List<Client> getClients(@RequestParam(defaultValue = "1") int page) {
+        int pageNumber = page > 0 ? page : 1;
+        return clientService.getByLastName(pageNumber-1);
     }
-
-    @GetMapping(path = "/dto", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ClientDto> getDtoClients(@RequestParam(required = false) int page) {
-        int pageNumber = page >= 0 ? page : 0;
-        return DtoMapper.mapToClientDtos(clientService.getByLastName(pageNumber));
-    }
-
-
 
     @GetMapping(path = "/first",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Client> getClientsByFirstName(@RequestParam(defaultValue="Wojtek") String firstName) {
@@ -63,5 +55,12 @@ public class ClientController {
         clientService.deleteClient(id);
     }
 
+    // DTO CLIENT
+
+    @GetMapping(path = "/dto", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ClientDto> getDtoClients(@RequestParam(defaultValue = "1") int page) {
+        int pageNumber = page > 0 ? page : 1;
+        return DtoMapper.mapToClientDtos(clientService.getByLastName(pageNumber-1));
+    }
 
 }
