@@ -22,8 +22,14 @@ public class ClientController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Client> getClients(@RequestParam(defaultValue="lastName") String orderBy) {
-        return clientService.getClients(orderBy);
+//        return clientService.getClients(orderBy);
+        return clientService.getByLastName();
+    }
 
+    @GetMapping(path = "/first",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Client> getClientsByFirstName(@RequestParam(defaultValue="Wojtek") String firstName) {
+//        return clientService.getClients(orderBy);
+        return clientService.getAllByFirstName(firstName);
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

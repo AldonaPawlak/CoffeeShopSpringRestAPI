@@ -1,19 +1,12 @@
 package com.codecool.coffeeshopspringrestapi.controller;
 
-import com.codecool.coffeeshopspringrestapi.model.Client;
-import com.codecool.coffeeshopspringrestapi.model.Order;
 import com.codecool.coffeeshopspringrestapi.model.Product;
-import com.codecool.coffeeshopspringrestapi.repository.ClientRepository;
-import com.codecool.coffeeshopspringrestapi.repository.OrderRepository;
-import com.codecool.coffeeshopspringrestapi.repository.ProductRepository;
-import com.codecool.coffeeshopspringrestapi.service.ClientService;
 import com.codecool.coffeeshopspringrestapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -30,14 +23,12 @@ public class ProductController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> getProducts() {
         return productService.getProducts();
-
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         return productService.getProduct(id);
     }
-
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveProduct(@RequestBody Product product) {
@@ -54,3 +45,4 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 }
+

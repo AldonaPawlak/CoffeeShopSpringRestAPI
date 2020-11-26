@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {
@@ -84,11 +85,6 @@ public class Client implements Serializable {
     }
 
 
-
-//    public void addOrder(Order order) {
-//        order.setClient(this);
-//        getOrders().add(order);
-//    }
 
     @Override
     public boolean equals(Object o) {
