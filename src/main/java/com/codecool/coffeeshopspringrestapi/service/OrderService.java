@@ -1,5 +1,6 @@
 package com.codecool.coffeeshopspringrestapi.service;
 
+import com.codecool.coffeeshopspringrestapi.model.Client;
 import com.codecool.coffeeshopspringrestapi.model.Order;
 import com.codecool.coffeeshopspringrestapi.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -40,5 +42,17 @@ public class OrderService {
 
     public void deleteOrder(long id) {
         orderRepository.deleteById(id);
+    }
+
+    public ResponseEntity<Order> editOrder(Order order) {
+        Optional<Order> optionalOrder = orderRepository.findById(order.getId());
+        optionalOrder.ifPresentOrElse(or -> updateOrder(or, order), optionalOrder::orElseThrow);
+        return ResponseEntity.accepted().build();
+    }
+
+    private void updateOrder(Order editedOrder, Order newOrder) {
+        editedOrder.setOrderDetails(newOrder.getOrderDetails());
+        editedOrder.setProducts(newOrder.getProducts());
+        orderRepository.save(editedOrder);
     }
 }

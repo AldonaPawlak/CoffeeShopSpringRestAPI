@@ -35,12 +35,12 @@ public class OrderController {
     public void saveOrder(@RequestBody Order order) {
         orderService.saveOrder(order);
     }
-    //
-//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Client> editClient(@RequestBody Client client) {
-//        return clientService.editClient(client);
-//    }
-//
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Order> editOrder(@RequestBody Order order) {
+        return orderService.editOrder(order);
+    }
+
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteOrder(@PathVariable long id) {
         orderService.deleteOrder(id);
